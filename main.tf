@@ -16,9 +16,6 @@ module "labels" {
 locals {
   region_code         = var.label_create_enabled ? module.labels.labels.region_code : null
   security_group_name = var.label_create_enabled ? "${var.environment}-${local.region_code}-sg" : "${var.environment}-sg"
-  tags = var.label_create_enabled ? {
-    "last-revision" = module.labels.labels.date
-  } : {}
 }
 
 module "vpc" {
