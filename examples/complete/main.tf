@@ -26,5 +26,6 @@ module "network" {
   label_create_enabled            = true
   nat_gateway_enabled             = false
   nat_instance_enabled            = false
+  region_code = "usw2"
   tags                            = local.tags
 }

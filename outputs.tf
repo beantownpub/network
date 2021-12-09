@@ -55,10 +55,6 @@ output "igw_id" {
   value = module.vpc.igw_id
 }
 
-output "labels" {
-  value = module.labels
-}
-
 output "security_group" {
   value = var.create_ssh_sg ? {
     arn         = module.security_group.security.arn

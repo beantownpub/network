@@ -2,11 +2,6 @@
 # Jalgraves 2021
 #
 
-output "labels" {
-  description = ""
-  value       = module.network.labels
-}
-
 output "security" {
   description = "Output from security group resource"
   value       = module.network.security_group

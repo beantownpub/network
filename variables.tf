@@ -158,6 +158,12 @@ variable "public_network_acl_id" {
   default     = ""
 }
 
+variable "region_code" {
+  type = string
+  description = ""
+  default = null
+}
+
 variable "subnet_attributes" {
   type        = list(string)
   description = <<EOT

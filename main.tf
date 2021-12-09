@@ -4,18 +4,8 @@
 
 data "aws_region" "current" {}
 
-module "labels" {
-  source  = "app.terraform.io/beantown/labels/aws"
-  version = "0.1.1"
-
-  enabled     = var.label_create_enabled
-  environment = var.environment
-  region      = data.aws_region.current.name
-}
-
 locals {
-  region_code         = var.label_create_enabled ? module.labels.labels.region_code : null
-  security_group_name = var.label_create_enabled ? "${var.environment}-${local.region_code}-sg" : "${var.environment}-sg"
+  security_group_name = var.label_create_enabled ? "${var.environment}-${var.region_code}-sg" : "${var.environment}-sg"
 }
 
 module "vpc" {
@@ -36,8 +26,8 @@ module "vpc" {
   ipv6_enabled                              = var.ipv6_enabled
   labels_as_tags                            = var.labels_as_tags
   label_order                               = var.label_order
-  stage                                     = local.region_code
-  tags                                      = merge(var.tags, local.tags)
+  stage                                     = var.region_code
+  tags                                      = var.tags
 }
 
 module "subnets" {
@@ -59,8 +49,8 @@ module "subnets" {
   private_network_acl_id  = var.private_network_acl_id
   public_network_acl_id   = var.public_network_acl_id
   vpc_id                  = module.vpc.vpc_id
-  stage                   = local.region_code
-  tags                    = merge(var.tags, local.tags)
+  stage                   = var.region_code
+  tags                    = var.tags
 }
 
 
