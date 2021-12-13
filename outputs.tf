@@ -55,15 +55,6 @@ output "igw_id" {
   value = module.vpc.igw_id
 }
 
-output "security_group" {
-  value = var.create_ssh_sg ? {
-    arn         = module.security_group.security.arn
-    description = module.security_group.security.description
-    id          = module.security_group.security.id
-    name        = module.security_group.security.name
-  } : {}
-}
-
 output "network" {
   value = {
     vpc_id                        = module.vpc.vpc_id

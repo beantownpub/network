@@ -12,10 +12,6 @@
 
 data "aws_region" "current" {}
 
-locals {
-  security_group_name = var.label_create_enabled ? "${var.environment}-${var.region_code}-sg" : "${var.environment}-sg"
-}
-
 module "vpc" {
   source  = "cloudposse/vpc/aws"
   version = "0.28.1"
@@ -59,14 +55,4 @@ module "subnets" {
   vpc_id                  = module.vpc.vpc_id
   stage                   = var.region_code
   tags                    = var.tags
-}
-
-
-module "security_group" {
-  source = "./modules/security"
-
-  enabled = var.create_ssh_sg
-  name    = local.security_group_name
-  ssh_ip  = var.allow_ssh_from_ip
-  vpc_id  = module.vpc.vpc_id
 }
