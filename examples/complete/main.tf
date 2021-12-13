@@ -11,6 +11,9 @@ locals {
     "Module"      = "terraform-aws-network",
     "Provisioner" = "Terratest"
   }
+  subnet_tags = {
+    "kubernetes.io/cluster/prod-use1-cluster" = "member"
+  }
 }
 
 module "network" {
@@ -26,6 +29,8 @@ module "network" {
   label_create_enabled            = true
   nat_gateway_enabled             = false
   nat_instance_enabled            = false
-  region_code = "usw2"
+  private_subnets_additional_tags = local.subnet_tags
+  public_subnets_additional_tags  = local.subnet_tags
+  region_code                     = "usw2"
   tags                            = local.tags
 }
