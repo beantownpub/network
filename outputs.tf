@@ -1,6 +1,7 @@
-#
-# Jalgraves 2021
-#
+# +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
+# |*|*|*|*| |J|A|L|G|R|A|V|E|S| |*|*|*|*|
+# +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
+# 2022
 
 output "public_subnet_cidrs" {
   value       = module.subnets.public_subnet_cidrs

@@ -8,6 +8,10 @@ export SELF ?= $(MAKE)
 .SHELLFLAGS += -e
 .ONESHELL: test
 
+## Install pre-commit hooks
+pre-commit/install:
+	pre-commit install --install-hooks --allow-missing-config -t pre-commit -t prepare-commit-msg
+
 ## Format Terraform code
 fmt:
 	terraform fmt --recursive

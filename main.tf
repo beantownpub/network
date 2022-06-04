@@ -1,14 +1,7 @@
-#                   ___                         ___           ___           ___                         ___           ___
-#      ___         /\  \                       /\__\         /\  \         /\  \          ___          /\__\         /\__\
-#     /\__\       /::\  \                     /:/ _/_       /::\  \       /::\  \        /\  \        /:/ _/_       /:/ _/_
-#    /:/__/      /:/\:\  \                   /:/ /\  \     /:/\:\__\     /:/\:\  \       \:\  \      /:/ /\__\     /:/ /\  \
-#   /::\  \     /:/ /::\  \   ___     ___   /:/ /::\  \   /:/ /:/  /    /:/ /::\  \       \:\  \    /:/ /:/ _/_   /:/ /::\  \
-#   \/\:\  \   /:/_/:/\:\__\ /\  \   /\__\ /:/__\/\:\__\ /:/_/:/__/___ /:/_/:/\:\__\  ___  \:\__\  /:/_/:/ /\__\ /:/_/:/\:\__\
-#    ~~\:\  \  \:\/:/  \/__/ \:\  \ /:/  / \:\  \ /:/  / \:\/:::::/  / \:\/:/  \/__/ /\  \ |:|  |  \:\/:/ /:/  / \:\/:/ /:/  /
-#       \:\__\  \::/__/       \:\  /:/  /   \:\  /:/  /   \::/~~/~~~~   \::/__/      \:\  \|:|  |   \::/_/:/  /   \::/ /:/  /
-#       /:/  /   \:\  \        \:\/:/  /     \:\/:/  /     \:\~~\        \:\  \       \:\__|:|__|    \:\/:/  /     \/_/:/  /
-#      /:/  /     \:\__\        \::/  /       \::/  /       \:\__\        \:\__\       \::::/__/      \::/  /        /:/  /
-#      \/__/       \/__/         \/__/         \/__/         \/__/         \/__/        ~~~~           \/__/         \/__/
+# +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
+# |*|*|*|*| |J|A|L|G|R|A|V|E|S| |*|*|*|*|
+# +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
+# 2022
 
 data "aws_region" "current" {}
 
@@ -31,28 +24,27 @@ module "vpc" {
   labels_as_tags                            = var.labels_as_tags
   label_order                               = var.label_order
   stage                                     = var.region_code
-  tags                                      = var.tags
+  tags                                      = merge(var.tags, { "Name" = var.vpc_name })
 }
 
 module "subnets" {
   source  = "cloudposse/dynamic-subnets/aws"
-  version = "0.39.8"
+  version = "2.0.2"
 
   attributes                      = var.subnet_attributes
   availability_zones              = var.availability_zones
-  cidr_block                      = module.vpc.vpc_cidr_block
+  ipv4_cidr_block                 = [module.vpc.vpc_cidr_block]
   environment                     = var.environment
-  igw_id                          = module.vpc.igw_id
+  igw_id                          = [module.vpc.igw_id]
   labels_as_tags                  = var.labels_as_tags
   label_order                     = var.label_order
   map_public_ip_on_launch         = var.map_public_ip_on_launch
+  max_nats                        = var.max_nats
   nat_elastic_ips                 = var.nat_elastic_ips
   nat_gateway_enabled             = var.nat_gateway_enabled
   nat_instance_enabled            = var.nat_instance_enabled
   nat_instance_type               = var.nat_instance_type
-  private_network_acl_id          = var.private_network_acl_id
   private_subnets_additional_tags = var.private_subnets_additional_tags
-  public_network_acl_id           = var.public_network_acl_id
   public_subnets_additional_tags  = var.public_subnets_additional_tags
   vpc_id                          = module.vpc.vpc_id
   stage                           = var.region_code

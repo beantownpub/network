@@ -1,16 +1,11 @@
-#
-# Jalgraves 2021
-#
+# +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
+# |*|*|*|*| |J|A|L|G|R|A|V|E|S| |*|*|*|*|
+# +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
+# 2022
 
 variable "additional_cidr_blocks" {
   description = "A list of additional IPv4 CIDR blocks to associate with the VPC"
   type        = list(string)
-  default     = null
-}
-
-variable "allow_ssh_from_ip" {
-  type        = string
-  description = "IP to allow SSH access from"
   default     = null
 }
 
@@ -33,12 +28,6 @@ variable "classiclink_enabled" {
 variable "classiclink_dns_support_enabled" {
   description = "A boolean flag to enable/disable ClassicLink DNS Support for the VPC"
   type        = bool
-  default     = false
-}
-
-variable "create_ssh_sg" {
-  type        = bool
-  description = "Create security group to allow SSH"
   default     = false
 }
 
@@ -101,7 +90,7 @@ variable "label_create_enabled" {
 variable "labels_as_tags" {
   type        = list(string)
   description = ""
-  default     = ["environment", "name", "attributes"]
+  default     = []
 }
 
 variable "label_order" {
@@ -114,6 +103,11 @@ variable "map_public_ip_on_launch" {
   type        = bool
   description = "Instances launched into a public subnet should be assigned a public IP address"
   default     = true
+}
+
+variable "max_nats" {
+  type    = number
+  default = 1
 }
 
 variable "name" {
@@ -146,21 +140,10 @@ variable "nat_instance_type" {
   default     = "t3.micro"
 }
 
-variable "private_network_acl_id" {
-  type        = string
-  description = "Network ACL ID that will be added to private subnets. If empty, a new ACL will be created"
-  default     = ""
-}
-
 variable "private_subnets_additional_tags" {
   default = {}
 }
 
-variable "public_network_acl_id" {
-  type        = string
-  description = "Network ACL ID that will be added to public subnets. If empty, a new ACL will be created"
-  default     = ""
-}
 variable "public_subnets_additional_tags" {
   default = {}
 }
@@ -194,3 +177,5 @@ variable "vpc_attributes" {
     EOT
   default     = ["vpc"]
 }
+
+variable "vpc_name" {}
