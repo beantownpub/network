@@ -4,8 +4,6 @@
 
 data "aws_region" "current" {}
 
-data "aws_region" "current" {}
-
 module "vpc" {
   source  = "cloudposse/vpc/aws"
   version = "2.0.0"
