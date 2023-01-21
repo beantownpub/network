@@ -1,7 +1,6 @@
 # +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
 # |*|*|*|*| |J|A|L|G|R|A|V|E|S| |*|*|*|*|
 # +-+-+-+-+ +-+-+-+-+-+-+-+-+-+ +-+-+-+-+
-# 2022
 
 variable "additional_cidr_blocks" {
   description = "A list of additional IPv4 CIDR blocks to associate with the VPC"
@@ -50,6 +49,8 @@ variable "default_security_group_deny_all" {
     EOT
   default     = false
 }
+
+variable "env" {}
 
 variable "environment" {
   type        = string
@@ -107,7 +108,7 @@ variable "map_public_ip_on_launch" {
 
 variable "max_nats" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "name" {
@@ -125,7 +126,7 @@ variable "nat_elastic_ips" {
 variable "nat_gateway_enabled" {
   type        = bool
   description = "Flag to enable/disable NAT Gateways to allow servers in the private subnets to access the Internet"
-  default     = false
+  default     = true
 }
 
 variable "nat_instance_enabled" {
@@ -160,7 +161,7 @@ variable "subnet_attributes" {
     ID element. Additional attributes (e.g. workers or cluster) to add to id, in the order they appear in the list. New attributes are appended to the
     end of the list. The elements of the list are joined by the delimiter and treated as a single ID element
     EOT
-  default     = ["subnet"]
+  default     = []
 }
 
 variable "tags" {
